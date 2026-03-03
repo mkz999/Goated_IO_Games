@@ -170,23 +170,6 @@ export default function GameModal({ game, isOpen, onClose, onPlay }) {
               <p className="text-gray-300 leading-relaxed">{game.description}</p>
             </div>
 
-            {/* Tags */}
-            {game.tags_list && game.tags_list.length > 0 && (
-              <div className="mb-6">
-                <h3 className="mb-3 text-lg font-semibold text-white">Tags</h3>
-                <div className="flex flex-wrap gap-2">
-                  {game.tags_list.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="rounded-full bg-primary/30 px-3 py-1 text-sm text-primary"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Action Buttons */}
             <div className="flex gap-3 pt-6 border-t border-gray-700">
               <button
