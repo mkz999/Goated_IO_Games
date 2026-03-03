@@ -99,7 +99,7 @@ export default function GameModal({ game, isOpen, onClose, onPlay }) {
               <div className="rounded-lg bg-gray-700 p-4">
                 <p className="text-xs font-semibold text-gray-400">PLAYS</p>
                 <p className="text-2xl font-bold text-primary">
-                  {(game.play_count / 1000).toFixed(1)}K
+                  {game.play_count.toLocaleString()}
                 </p>
               </div>
 

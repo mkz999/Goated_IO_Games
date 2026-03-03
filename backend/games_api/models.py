@@ -41,7 +41,7 @@ class Game(models.Model):
     # Metadata
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    is_featured = models.BooleanField(default=False, verbose_name='New')
+    is_featured = models.BooleanField(default=False, verbose_name='is new')
     is_active = models.BooleanField(default=True)
 
     class Meta:
