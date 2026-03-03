@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  @apply bg-gray-900 text-gray-100;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/80;
+}
+
+/* Smooth transitions */
+.smooth-transition {
+  @apply transition-all duration-300;
+}
+
+/* Glassmorphism effect */
+.glass {
+  @apply bg-white/10 backdrop-blur-md border border-white/20;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+}
