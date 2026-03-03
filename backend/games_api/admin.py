@@ -23,7 +23,7 @@ class GameAdmin(admin.ModelAdmin):
             'fields': ('thumbnail', 'game_url')
         }),
         ('Metadata', {
-            'fields': ('tags', 'difficulty', 'play_count')
+            'fields': ('difficulty', 'play_count')
         }),
         ('Status', {
             'fields': ('is_featured', 'is_active', 'created_at', 'updated_at')
