@@ -23,12 +23,14 @@ function App() {
     games,
     categories,
     selectedCategory,
+    selectedDifficulty,
     sortBy,
     searchQuery,
     loading,
     error,
     handleSearch,
     handleCategoryChange,
+    handleDifficultyChange,
     handleSortChange,
   } = useGames()
 
@@ -61,7 +63,9 @@ function App() {
         <Sidebar
           categories={categories}
           selectedCategory={selectedCategory}
+          selectedDifficulty={selectedDifficulty}
           onCategoryChange={handleCategoryChange}
+          onDifficultyChange={handleDifficultyChange}
           isLoading={loading}
         />
 

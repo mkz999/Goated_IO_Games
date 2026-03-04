@@ -9,10 +9,20 @@ import { Menu, X } from 'lucide-react'
 export default function Sidebar({
   categories,
   selectedCategory,
+  selectedDifficulty,
   onCategoryChange,
+  onDifficultyChange,
   isLoading = false,
 }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+
+  const difficultyOptions = [
+    { value: 'impossible', label: 'Impossible', icon: '⬛' },
+    { value: 'extreme', label: 'Extreme', icon: '🟣' },
+    { value: 'hard', label: 'Hard', icon: '🔴' },
+    { value: 'medium', label: 'Medium', icon: '🟡' },
+    { value: 'easy', label: 'Easy', icon: '🟢' },
+  ]
 
   const categoryIcons = {
     action: '⚔️',
@@ -97,6 +107,45 @@ export default function Sidebar({
           ) : (
             <div className="p-6 text-center text-gray-400">No categories found</div>
           )}
+
+          {/* Divider */}
+          <div className="border-t border-gray-700 my-2"></div>
+
+          {/* Difficulty Filter Section */}
+          <div className="p-4">
+            <h3 className="text-lg font-bold text-white mb-3">Difficulty</h3>
+            <button
+              onClick={() => {
+                onDifficultyChange(null)
+                setIsMobileOpen(false)
+              }}
+              disabled={isLoading}
+              className={`w-full px-4 py-2 text-left font-medium transition-all duration-200 rounded mb-2 ${
+                selectedDifficulty === null
+                  ? 'border border-primary bg-primary/20 text-primary'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+              } disabled:opacity-50`}
+            >
+              🎮 All Difficulties
+            </button>
+            {difficultyOptions.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => {
+                  onDifficultyChange(option.value)
+                  setIsMobileOpen(false)
+                }}
+                disabled={isLoading}
+                className={`w-full px-4 py-2 text-left font-medium transition-all duration-200 rounded mb-2 ${
+                  selectedDifficulty === option.value
+                    ? 'border border-primary bg-primary/20 text-primary'
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                } disabled:opacity-50`}
+              >
+                {option.icon} {option.label}
+              </button>
+            ))}
+          </div>
         </div>
       </aside>
 

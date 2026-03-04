@@ -10,6 +10,7 @@ export function useGames(initialCategory = null) {
   const [filteredGames, setFilteredGames] = useState([])
   const [categories, setCategories] = useState([])
   const [selectedCategory, setSelectedCategory] = useState(initialCategory)
+  const [selectedDifficulty, setSelectedDifficulty] = useState(null)
   const [sortBy, setSortBy] = useState('-created_at')
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(true)
@@ -40,6 +41,10 @@ export function useGames(initialCategory = null) {
           page: currentPage,
         }
 
+        if (selectedDifficulty) {
+          params.difficulty = selectedDifficulty
+        }
+
         let response
         if (selectedCategory) {
           response = await gamesAPI.getGamesByCategory(selectedCategory, params)
@@ -60,7 +65,7 @@ export function useGames(initialCategory = null) {
     }
 
     fetchGames()
-  }, [selectedCategory, sortBy, currentPage])
+  }, [selectedCategory, selectedDifficulty, sortBy, currentPage])
 
   // Filter games by search query
   useEffect(() => {
@@ -87,6 +92,11 @@ export function useGames(initialCategory = null) {
     setCurrentPage(1)
   }, [])
 
+  const handleDifficultyChange = useCallback((difficulty) => {
+    setSelectedDifficulty(difficulty)
+    setCurrentPage(1)
+  }, [])
+
   const handleSortChange = useCallback((sort) => {
     setSortBy(sort)
     setCurrentPage(1)
@@ -97,6 +107,7 @@ export function useGames(initialCategory = null) {
     allGames: games,
     categories,
     selectedCategory,
+    selectedDifficulty,
     sortBy,
     searchQuery,
     loading,
@@ -104,6 +115,7 @@ export function useGames(initialCategory = null) {
     currentPage,
     handleSearch,
     handleCategoryChange,
+    handleDifficultyChange,
     handleSortChange,
     setCurrentPage,
   }
