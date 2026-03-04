@@ -24,6 +24,7 @@ class Game(models.Model):
         ('easy', 'Easy'),
         ('medium', 'Medium'),
         ('hard', 'Hard'),
+        ('extreme', 'Extreme'),
     ]
 
     title = models.CharField(max_length=200)
