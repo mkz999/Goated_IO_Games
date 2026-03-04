@@ -64,7 +64,7 @@ export default function Sidebar({
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 z-40 h-screen w-64 transform bg-gray-800 border-r border-gray-700 transition-transform duration-300 flex flex-col md:relative md:z-0 md:translate-x-0 ${
+        className={`fixed left-0 top-0 z-40 h-screen w-64 transform bg-gray-800 border-r border-gray-700 transition-transform duration-300 flex flex-col md:relative md:z-0 md:h-full md:translate-x-0 ${
           isMobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -83,7 +83,7 @@ export default function Sidebar({
             }}
             disabled={isLoading}
             className={`w-full px-6 py-3 text-left font-medium transition-all duration-200 ${
-              selectedCategory === null
+              selectedCategory === null && selectedDifficulty === null
                 ? 'border-r-4 border-primary bg-primary/20 text-primary'
                 : 'text-gray-300 hover:bg-gray-700 hover:text-white'
             } disabled:opacity-50`}
@@ -95,68 +95,53 @@ export default function Sidebar({
           {isLoading ? (
             <div className="p-6 text-center text-gray-400">Loading categories...</div>
           ) : categories.length > 0 ? (
-            categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => {
-                  onCategoryChange(category.slug)
-                  setIsMobileOpen(false)
-                }}
-                className={`w-full px-6 py-3 text-left font-medium transition-all duration-200 ${
-                  selectedCategory === category.slug
-                    ? 'border-r-4 border-primary bg-primary/20 text-primary'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                }`}
-              >
-                <span className="mr-2">{getCategoryIcon(category.slug)}</span>
-                {category.name}
-                <span className="float-right text-xs text-gray-500">
-                  ({category.game_count})
-                </span>
-              </button>
-            ))
+            <>
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => {
+                    onCategoryChange(category.slug)
+                    setIsMobileOpen(false)
+                  }}
+                  className={`w-full px-6 py-3 text-left font-medium transition-all duration-200 ${
+                    selectedCategory === category.slug
+                      ? 'border-r-4 border-primary bg-primary/20 text-primary'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                  }`}
+                >
+                  <span className="mr-2">{getCategoryIcon(category.slug)}</span>
+                  {category.name}
+                  <span className="float-right text-xs text-gray-500">
+                    ({category.game_count})
+                  </span>
+                </button>
+              ))}
+
+              {/* Divider */}
+              <div className="border-t border-gray-700 my-2"></div>
+
+              {/* Difficulty Filter Items - Part of main list */}
+              {difficultyOptions.map((option) => (
+                <button
+                  key={option.value}
+                  onClick={() => {
+                    onDifficultyChange(option.value)
+                    setIsMobileOpen(false)
+                  }}
+                  disabled={isLoading}
+                  className={`w-full px-6 py-3 text-left font-medium transition-all duration-200 ${
+                    selectedDifficulty === option.value
+                      ? 'border-r-4 border-primary bg-primary/20 text-primary'
+                      : `${getDifficultyColor(option.value)} hover:bg-gray-700`
+                  } disabled:opacity-50`}
+                >
+                  {option.icon} {option.label}
+                </button>
+              ))}
+            </>
           ) : (
             <div className="p-6 text-center text-gray-400">No categories found</div>
           )}
-
-          {/* Divider */}
-          <div className="border-t border-gray-700 my-2"></div>
-
-          {/* Difficulty Filter Section */}
-          <div className="p-4">
-            <h3 className="text-lg font-bold text-white mb-3">Difficulty</h3>
-            <button
-              onClick={() => {
-                onDifficultyChange(null)
-                setIsMobileOpen(false)
-              }}
-              disabled={isLoading}
-              className={`w-full px-4 py-2 text-left font-medium transition-all duration-200 rounded mb-2 ${
-                selectedDifficulty === null
-                  ? 'border border-primary bg-primary/20 text-primary'
-                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-              } disabled:opacity-50`}
-            >
-              🎮 All Difficulties
-            </button>
-            {difficultyOptions.map((option) => (
-              <button
-                key={option.value}
-                onClick={() => {
-                  onDifficultyChange(option.value)
-                  setIsMobileOpen(false)
-                }}
-                disabled={isLoading}
-                className={`w-full px-4 py-2 text-left font-medium transition-all duration-200 rounded mb-2 ${
-                  selectedDifficulty === option.value
-                    ? 'border border-primary bg-primary/20 text-primary'
-                    : `${getDifficultyColor(option.value)} hover:opacity-80`
-                } disabled:opacity-50`}
-              >
-                {option.icon} {option.label}
-              </button>
-            ))}
-          </div>
         </div>
       </aside>
 
