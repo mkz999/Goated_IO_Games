@@ -13,8 +13,8 @@ export default function SortOptions({ value, onChange }) {
     { value: 'created_at', label: '📅 Oldest' },
     { value: '-play_count', label: '👾 Most Played' },
     { value: 'play_count', label: '👾 Least Played' },
-    { value: '-rating', label: '⭐ Highest Rated' },
-    { value: 'rating', label: '⭐ Lowest Rated' },
+    { value: '-avg_rating', label: '⭐ Highest Rated' },
+    { value: 'avg_rating', label: '⭐ Lowest Rated' },
   ]
 
   const selectedLabel = sortOptions.find((opt) => opt.value === value)?.label || 'Sort by'

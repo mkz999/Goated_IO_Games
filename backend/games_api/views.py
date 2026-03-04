@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
+from django.db.models import Q, Avg
 from django.views import View
 from django.http import HttpResponse
 from django.conf import settings
@@ -41,7 +41,7 @@ class GameViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = GamePagination
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'description', 'tags']
-    ordering_fields = ['created_at', 'play_count', 'rating']
+    ordering_fields = ['created_at', 'play_count', 'avg_rating']
     ordering = ['-created_at']
 
     def get_serializer_class(self):
@@ -51,8 +51,12 @@ class GameViewSet(viewsets.ReadOnlyModelViewSet):
         return GameListSerializer
 
     def get_queryset(self):
-        """Filter games by category and difficulty if provided"""
+        """Filter games by category and difficulty if provided, and annotate with average rating"""
         queryset = super().get_queryset()
+        
+        # Annotate average rating so it can be sorted
+        queryset = queryset.annotate(avg_rating=Avg('ratings__rating'))
+        
         category = self.request.query_params.get('category')
         difficulty = self.request.query_params.get('difficulty')
         
