@@ -17,11 +17,11 @@ export default function Sidebar({
   const [isMobileOpen, setIsMobileOpen] = useState(false)
 
   const difficultyOptions = [
-    { value: 'impossible', label: 'Impossible', icon: '⬛' },
-    { value: 'extreme', label: 'Extreme', icon: '🟣' },
-    { value: 'hard', label: 'Hard', icon: '🔴' },
-    { value: 'medium', label: 'Medium', icon: '🟡' },
     { value: 'easy', label: 'Easy', icon: '🟢' },
+    { value: 'medium', label: 'Medium', icon: '🟡' },
+    { value: 'hard', label: 'Hard', icon: '🔴' },
+    { value: 'extreme', label: 'Extreme', icon: '🟣' },
+    { value: 'impossible', label: 'Impossible', icon: '⬛' },
   ]
 
   const categoryIcons = {
@@ -42,7 +42,7 @@ export default function Sidebar({
 
   const getDifficultyColor = (difficulty) => {
     const colors = {
-      impossible: 'text-white bg-black/40',
+      impossible: 'text-gray-400',
       extreme: 'text-purple-400',
       hard: 'text-red-400',
       medium: 'text-yellow-400',
