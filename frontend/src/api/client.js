@@ -2,12 +2,39 @@ import axios from 'axios'
 
 const API_BASE_URL = '/api'
 
+// Function to get CSRF token from cookies
+function getCookie(name) {
+  let cookieValue = null
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';')
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim()
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+        break
+      }
+    }
+  }
+  return cookieValue
+}
+
 // Create axios instance with default config
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+})
+
+// Add CSRF token to all POST, PUT, PATCH, DELETE requests
+apiClient.interceptors.request.use((config) => {
+  if (['post', 'put', 'patch', 'delete'].includes(config.method)) {
+    const csrfToken = getCookie('csrftoken')
+    if (csrfToken) {
+      config.headers['X-CSRFToken'] = csrfToken
+    }
+  }
+  return config
 })
 
 // Games API
