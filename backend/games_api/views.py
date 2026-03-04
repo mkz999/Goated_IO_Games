@@ -4,6 +4,12 @@ from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.views import View
+from django.http import HttpResponse
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+from django.conf import settings
+import os
 from .models import Game, Category, UserFavorite
 from .serializers import GameListSerializer, GameDetailSerializer, CategorySerializer
 
@@ -173,3 +179,35 @@ class GameViewSet(viewsets.ReadOnlyModelViewSet):
             'average_rating': game.get_average_rating(),
             'message': 'Each IP can only vote once' if not created else 'Rating submitted successfully'
         })
+
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
+class FrontendView(View):
+    """Serve the React frontend"""
+    
+    def get(self, request, *args, **kwargs):
+        """Serve the Vite-built index.html"""
+        try:
+            # Try to serve the Vite-built index.html
+            dist_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'dist', 'index.html')
+            if os.path.exists(dist_path):
+                with open(dist_path, 'r') as f:
+                    content = f.read()
+                return HttpResponse(content, content_type='text/html')
+        except:
+            pass
+        
+        # Fallback to basic template
+        html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goated IO Games</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="/static/dist/index.js"></script>
+</body>
+</html>"""
+        return HttpResponse(html, content_type='text/html')

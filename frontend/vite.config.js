@@ -3,6 +3,11 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react()],
+  base: '/static/dist/',
+  build: {
+    outDir: '../backend/staticfiles/dist',
+    emptyOutDir: true,
+  },
   server: {
     port: 3000,
     proxy: {
