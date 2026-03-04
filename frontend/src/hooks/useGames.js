@@ -16,6 +16,8 @@ export function useGames(initialCategory = null) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [totalCount, setTotalCount] = useState(0)
 
   // Fetch all categories
   useEffect(() => {
@@ -54,6 +56,16 @@ export function useGames(initialCategory = null) {
 
         const gamesList = response.data.results || response.data
         setGames(gamesList)
+        
+        // Extract pagination info from response
+        if (response.data.count !== undefined) {
+          const count = response.data.count
+          const pageSize = 12
+          const pages = Math.ceil(count / pageSize)
+          setTotalCount(count)
+          setTotalPages(pages)
+        }
+        
         setError(null)
       } catch (err) {
         console.error('Error fetching games:', err)
@@ -113,6 +125,8 @@ export function useGames(initialCategory = null) {
     loading,
     error,
     currentPage,
+    totalPages,
+    totalCount,
     handleSearch,
     handleCategoryChange,
     handleDifficultyChange,

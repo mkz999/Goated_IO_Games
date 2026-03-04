@@ -3,6 +3,7 @@ import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import SearchBar from './components/SearchBar'
 import SortOptions from './components/SortOptions'
+import Pagination from './components/Pagination'
 import GameCard from './components/GameCard'
 import GameModal from './components/GameModal'
 import LoadingSpinner from './components/LoadingSpinner'
@@ -28,10 +29,14 @@ function App() {
     searchQuery,
     loading,
     error,
+    currentPage,
+    totalPages,
+    totalCount,
     handleSearch,
     handleCategoryChange,
     handleDifficultyChange,
     handleSortChange,
+    setCurrentPage,
   } = useGames()
 
   const { favorites, toggleFavorite, isFavorited } = useFavorites()
@@ -91,7 +96,7 @@ function App() {
                     : 'All Games'}
                 </h2>
                 <p className="text-sm text-gray-400 mt-1">
-                  Showing {games.length} game{games.length !== 1 ? 's' : ''}
+                  Showing {games.length} of {totalCount} game{games.length !== 1 ? 's' : ''}
                 </p>
               </div>
             )}
@@ -104,17 +109,27 @@ function App() {
 
             {/* Games Grid */}
             {!loading && !error && games.length > 0 ? (
-              <div className="grid auto-rows-max grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {games.map((game) => (
-                  <GameCard
-                    key={game.id}
-                    game={game}
-                    isFavorited={isFavorited(game.id)}
-                    onFavoriteToggle={toggleFavorite}
-                    onGameClick={handleGameClick}
-                  />
-                ))}
-              </div>
+              <>
+                <div className="grid auto-rows-max grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  {games.map((game) => (
+                    <GameCard
+                      key={game.id}
+                      game={game}
+                      isFavorited={isFavorited(game.id)}
+                      onFavoriteToggle={toggleFavorite}
+                      onGameClick={handleGameClick}
+                    />
+                  ))}
+                </div>
+                
+                {/* Pagination */}
+                <Pagination 
+                  currentPage={currentPage} 
+                  totalPages={totalPages} 
+                  onPageChange={setCurrentPage}
+                  isLoading={loading}
+                />
+              </>
             ) : !loading && !error ? (
               <div className="flex flex-col items-center justify-center py-20">
                 <div className="text-6xl mb-4">🎮</div>
