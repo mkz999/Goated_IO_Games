@@ -40,6 +40,17 @@ export default function Sidebar({
     return categoryIcons[lowerSlug] || '🎮'
   }
 
+  const getDifficultyColor = (difficulty) => {
+    const colors = {
+      impossible: 'text-white bg-black/40',
+      extreme: 'text-purple-400',
+      hard: 'text-red-400',
+      medium: 'text-yellow-400',
+      easy: 'text-green-400',
+    }
+    return colors[difficulty] || 'text-gray-300'
+  }
+
   return (
     <>
       {/* Mobile Toggle Button */}
@@ -139,7 +150,7 @@ export default function Sidebar({
                 className={`w-full px-4 py-2 text-left font-medium transition-all duration-200 rounded mb-2 ${
                   selectedDifficulty === option.value
                     ? 'border border-primary bg-primary/20 text-primary'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    : `${getDifficultyColor(option.value)} hover:opacity-80`
                 } disabled:opacity-50`}
               >
                 {option.icon} {option.label}
