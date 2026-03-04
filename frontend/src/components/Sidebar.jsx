@@ -63,7 +63,7 @@ export default function Sidebar({
         </div>
 
         {/* Category List */}
-        <div className="overflow-y-auto h-[calc(100vh-100px)]">
+        <div className="p-6">
           {/* All Games (Show All) */}
           <button
             onClick={() => {
