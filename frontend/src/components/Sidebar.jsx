@@ -64,7 +64,7 @@ export default function Sidebar({
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 z-40 h-screen w-64 transform bg-gray-800 border-r border-gray-700 transition-transform duration-300 md:relative md:z-0 md:translate-x-0 ${
+        className={`fixed left-0 top-0 z-40 h-screen w-64 transform bg-gray-800 border-r border-gray-700 transition-transform duration-300 flex flex-col md:relative md:z-0 md:translate-x-0 ${
           isMobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -74,7 +74,7 @@ export default function Sidebar({
         </div>
 
         {/* Category List */}
-        <div className="p-6">
+        <div className="flex-1 p-6">
           {/* All Games (Show All) */}
           <button
             onClick={() => {
