@@ -107,7 +107,11 @@ export default function GameModal({ game, isOpen, onClose, onPlay }) {
               <div className="rounded-lg bg-gray-700 p-4">
                 <p className="text-xs font-semibold text-gray-400">DIFFICULTY</p>
                 <p className={`text-lg font-bold uppercase ${
-                  game.difficulty === 'easy'
+                  game.difficulty === 'impossible'
+                    ? 'text-black bg-white px-2 py-1 rounded w-fit'
+                    : game.difficulty === 'extreme'
+                    ? 'text-purple-400'
+                    : game.difficulty === 'easy'
                     ? 'text-green-400'
                     : game.difficulty === 'medium'
                     ? 'text-yellow-400'

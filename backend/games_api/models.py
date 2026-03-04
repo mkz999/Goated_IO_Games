@@ -21,7 +21,7 @@ class Category(models.Model):
 class Game(models.Model):
     """Game model"""
     DIFFICULTY_CHOICES = [
-        ('beginner', 'Beginner'),
+        ('impossible', 'Impossible'),
         ('easy', 'Easy'),
         ('medium', 'Medium'),
         ('hard', 'Hard'),

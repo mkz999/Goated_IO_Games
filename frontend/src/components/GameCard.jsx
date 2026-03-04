@@ -77,7 +77,11 @@ export default function GameCard({
             <div className="flex-shrink-0 w-20 h-6 flex items-center justify-center">
               <div
                 className={`px-2 py-1 rounded text-xs font-semibold whitespace-nowrap w-full text-center ${
-                  game.difficulty === 'easy'
+                  game.difficulty === 'impossible'
+                    ? 'bg-black text-white'
+                    : game.difficulty === 'extreme'
+                    ? 'bg-purple-600'
+                    : game.difficulty === 'easy'
                     ? 'bg-green-600'
                     : game.difficulty === 'medium'
                     ? 'bg-yellow-600'
