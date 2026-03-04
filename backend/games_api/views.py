@@ -51,12 +51,16 @@ class GameViewSet(viewsets.ReadOnlyModelViewSet):
         return GameListSerializer
 
     def get_queryset(self):
-        """Filter games by category if provided"""
+        """Filter games by category and difficulty if provided"""
         queryset = super().get_queryset()
         category = self.request.query_params.get('category')
+        difficulty = self.request.query_params.get('difficulty')
         
         if category:
             queryset = queryset.filter(categories__slug=category)
+        
+        if difficulty:
+            queryset = queryset.filter(difficulty=difficulty)
         
         return queryset
 
